@@ -10,7 +10,7 @@ class PaifuParseTool:
     
     def __init__(self, info, folder = None):
         if folder is None:
-            folder = os.path.expanduser('~/Documents/TenhouMJLog/log/') + info[:6] + '/'
+            folder = os.path.expanduser('~/Documents/MJLogPython/log/') + info[:6] + '/'
         
         info = re.sub(r'\.mjlog$', '', info)
         self._filepath = folder + info + '.mjlog'
@@ -156,7 +156,8 @@ class PaifuParseTool:
                        [131, 130, 129, 128, 115, 114, 113, 112,  99,  98,  97,  96,  86,  82], 
                        [127, 126, 125, 124, 111, 110, 109, 108,  95,  94,  93,  92,  85,  81], 
                        [123, 122, 121, 120, 107, 106, 105, 104,  91,  90,  89,  88,  84,  80]]
-        seatName = ["\u4e1c", "\u5357", "\u897f", "\u5317"]
+        seatName = ['东', '南', '西', '北'] # seatName = ["\u4e1c", "\u5357", "\u897f", "\u5317"]
+        # seatName at E-0, not necessarily at this round
         
         print("-------Game {:02d}-------".format(kyoku))
         print("Haipai:")
