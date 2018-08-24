@@ -2,6 +2,7 @@ import os
 import re
 os.chdir(os.path.expanduser('~/Documents/MJLogPython/'))
 from printHaipai import PaifuParseTool
+from meld import Meld
 def getMonth(month):
     folder = os.path.expanduser('~/Documents/MJLogPython/log/{}/'.format(month))
     
@@ -22,8 +23,8 @@ def getMonth(month):
                    "<東>", "<南>", "<西>", "<北>", "<白>", "<發>", "<中>"]
     #cnt, cnt1 = 0, 0
     with open(ykmlist, 'rb') as file_:
-        print(next(file_))
-        print(next(file_))
+        next(file_)
+        next(file_)
         #                        ' time ','  name  ','[table,[   hand   ],[chiiponkon],last]' ,[yakuman(s)],'link info'
         ykmline = re.finditer(r'\'.{11}\',\'[^\']+\',\'\[\d+,\[([\d,]+)\],\[([\d,]*)\],\d+\]\',\[([\d,]*)\],\'([^\']+)\'', next(file_).decode('utf-8'))
         for ykm in ykmline:
@@ -33,7 +34,12 @@ def getMonth(month):
             try:
                 ykmtypes = {int(_) for _ in ykmstr.split(',')}
             except:
-                print(''.join(CharHaiDisp[int(tile) >> 2] for tile in hand.split(',')))
+                # 数え役満
+                s = ''.join(CharHaiDisp[int(tile) >> 2] for tile in hand.split(','))
+                if len(furu) > 0:
+                    s += ', ' + ', '.join(Meld(_).getInfo() for _ in furu.split(','))
+                print(info)
+                print(s)
             #if (37 in ykmtypes) or (38 in ykmtypes): # 天和，地和
             #    #cnt1 += 1
             #    a = PaifuParseTool(info)
@@ -43,8 +49,6 @@ def getMonth(month):
     return None
 
 if __name__ == "__main__":
-    #for yr in ['2017', '2018']:
-    #    for mn in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
-    #        print(yr, mn)
-    #        getMonth(yr + mn)
-    getMonth('201806')
+    for yr in ['2017', '2018']:
+        for mn in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
+            getMonth(yr + mn)
