@@ -1,0 +1,2 @@
+# MJLogPython
+Read Tenhou Replays
